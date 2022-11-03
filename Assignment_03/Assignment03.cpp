@@ -258,7 +258,7 @@ public:
 };
 
 // Code realated to Circle
-class Vert
+struct Vert
 {
 private:
 	float x1, y1,radius;
@@ -279,7 +279,16 @@ public:
 	float getY1() {
 		return y1;
 	}
+	float getRadius() {
+		return radius;
+	}
 };
+
+bool compareInterval(Vert c1, Vert c2)
+{
+	return (c1.getRadius() < c2.getRadius());
+}
+
 
 class Circles
 {
@@ -288,6 +297,7 @@ private:
 	float x, y, radius;
 	std::vector<Vert> circles;
 public:
+	
 	void CircleData()
 	{
 		std::cout << "Enter the number of Circles: " << std::endl;
@@ -297,6 +307,15 @@ public:
 			std::cout << "Enter X , Y Co-ordinates and radius of circle : " <<i<< std::endl;
 			std::cin >> x>> y>> radius;
 			circles.push_back({ x, y, radius });
+		}
+		std::sort(circles.begin(), circles.end(), &compareInterval);
+		printData();
+	}
+	void printData()
+	{
+		for (auto it = circles.begin(); it != circles.end(); it++)
+		{
+			std::cout << "X = " << (*it).getX1() << " Y= " << (*it).getY1() << " Radius = " << (*it).getRadius() << " Area = " << (*it).getArea()<<std::endl;
 		}
 	}
 };
@@ -311,7 +330,7 @@ int main(void)
 	ListOperations lsObj(ls);
 	Circles c;
 	// code
-	/*std::cout << "Enter the number N: "<<std::endl;
+	std::cout << "Enter the number N: "<<std::endl;
 	std::cin >> num;
 	std::cout << "Sum of digits of given number N is : " << obj.getSum(num) << std::endl;
 	std::cout << "Reverse of given number is M : " << obj.reverseDigits(num) << std::endl;
@@ -319,12 +338,12 @@ int main(void)
 	std::cout << result << std::endl;
 	std::cout << "Sum of first and last digits of given number N is : " << obj.sumFirstLast(num) << std::endl;
 	std::cout << "Number after adding 1 to each digit : " << obj.addDigit(num) << std::endl;	
-	std::cout << obj.profitLoss(500, 200) << std::endl;	*/
-	/*lsObj.setList();
+	std::cout << obj.profitLoss(500, 200) << std::endl;	
+	lsObj.setList();
 	lsObj.LargestSmallest();
 	lsObj.MultiplyList();
-	lsObj.ListDivide();*/
-	//lsObj.cardinals();
+	lsObj.ListDivide();
+	lsObj.cardinals();
 	c.CircleData();
 	return 0;
 }
